@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  parentRefs:
+    - name: gateway-external-http # our Gateway name
+  hostnames:
+    - "www.example.com"
+  rules:
+    - matches:
+        - path:
+            # Route "all" traffic
+            value: /
+      backendRefs:
+        # Here we are referencing our nginx service
+        - name: nginx
+          port: 80
